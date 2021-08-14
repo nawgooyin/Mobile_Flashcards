@@ -65,7 +65,7 @@ const Navigation = createAppContainer(Stacks);
 
 export default class App extends Component {
   componentDidMount() {
-    setLocalNotification();
+    //setLocalNotification();
   }
 
   render() {
