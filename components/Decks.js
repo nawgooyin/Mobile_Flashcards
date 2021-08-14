@@ -15,6 +15,21 @@ class Decks extends Component {
   render() {
     const { decks } = this.props;
 
+    console.log('decks: ', decks);
+
+    if (Object.keys(decks).length === 0) {
+      return (
+        <View>
+          <Text style={styles.decksTitle}>Decks</Text>
+          <View style={{flex: 1, alignItems: "center"}}>
+            <Text style={styles.deckText}>
+              Please add a deck to begin your quiz
+            </Text>
+          </View>
+        </View>
+      );
+    }
+
     return (
       <ScrollView>
         <View>

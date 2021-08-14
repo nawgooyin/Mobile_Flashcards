@@ -1,6 +1,6 @@
 import { AsyncStorage } from "react-native";
 
-export const MOBILE_FLASH_CARDS_KEY = "MobileFlashCardssssss";
+export const MOBILE_FLASH_CARDS_KEY = "MobileFlashCardsssssss";
 
 const initialData = { 
   React: {
