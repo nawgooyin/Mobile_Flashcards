@@ -5,22 +5,6 @@ import { AsyncStorage } from "react-native";
 
 const NOTIFICATION_KEY = `${MOBILE_FLASH_CARDS_KEY}:Notifications`;
 
-export function createNotification() {
-  return {
-    title: "Mobile Flashcards",
-    body: "Quiz yourself today!.",
-    ios: {
-      sound: true
-    },
-    android: {
-      sound: true,
-      priority: "high",
-      sticky: false,
-      vibrate: true
-    }
-  };
-}
-
 export function clearLocalNotifications(){
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
   .then(() => {
@@ -31,7 +15,7 @@ export function clearLocalNotifications(){
 export function setLocalNotifications(){
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
-    .then((data) => {
+    .then(() => {
       Notifications.cancelAllScheduledNotificationsAsync()
 
       Notifications.setNotificationHandler({
@@ -41,13 +25,16 @@ export function setLocalNotifications(){
           shouldSetBadge: false
         })
       })
-      
+
       Notifications.scheduleNotificationAsync({
         content: {
           title: "Mobile Flashcards",
           body: "Quiz yourself today!."
         },
-        trigger: new Date(Date.now() + 5 * 1000)
+        trigger: {
+          seconds: 60 * 60 * 24,
+          repeats: true,
+        }
       })
 
       AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))

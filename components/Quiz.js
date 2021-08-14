@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { setLocalNotification, clearLocalNotification } from "../utils/notifications";
+import { setLocalNotifications, clearLocalNotifications } from "../utils/notifications";
 
 class Quiz extends Component {
   state = {
@@ -36,7 +36,10 @@ class Quiz extends Component {
   restartQuiz = () => {
     const empty = [];
     this.setState({ index: 1, questionLength: 0, correct: empty, incorrect: empty });
-    //clearLocalNotification().then(setLocalNotification);
+    
+    if(this.state.index > this.props.deck.questions.length) {
+      clearLocalNotifications().then(setLocalNotifications);
+    }
   };
 
   toDeck = () => {
