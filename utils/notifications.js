@@ -1,4 +1,3 @@
-import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
 
 import { MOBILE_FLASH_CARDS_KEY } from "./api";
@@ -33,32 +32,25 @@ export function setLocalNotifications(){
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
     .then((data) => {
-      Permissions.askAsync(Permissions.NOTIFICATIONS)
-        .then(({status}) => {
-          if(status === 'denied'){
-          }
+      Notifications.cancelAllScheduledNotificationsAsync()
 
-          if(status === 'granted'){
-            Notifications.cancelAllScheduledNotificationsAsync()
-
-            Notifications.setNotificationHandler({
-              handleNotification: async () => ({
-                shouldPlaySound: true,
-                shouldShowAlert: true,
-                shouldSetBadge: false
-              })
-            })
-            
-            Notifications.scheduleNotificationAsync({
-              content: {
-                title: "Mobile Flashcards",
-                body: "Quiz yourself today!."
-              },
-              trigger: new Date(Date.now() + 5 * 1000)
-            })
-
-            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
-          }
+      Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+          shouldPlaySound: true,
+          shouldShowAlert: true,
+          shouldSetBadge: false
         })
-    })
+      })
+      
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Mobile Flashcards",
+          body: "Quiz yourself today!."
+        },
+        trigger: new Date(Date.now() + 5 * 1000)
+      })
+
+      AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+    }
+  )
 }
