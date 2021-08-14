@@ -15,8 +15,6 @@ class Decks extends Component {
   render() {
     const { decks } = this.props;
 
-    console.log('decks: ', decks);
-
     if (Object.keys(decks).length === 0) {
       return (
         <View>

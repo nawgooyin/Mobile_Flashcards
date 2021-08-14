@@ -1,35 +1,39 @@
 import { AsyncStorage } from "react-native";
 
-export const MOBILE_FLASH_CARDS_KEY = "MobileFlashCardsssssss";
+export const MOBILE_FLASH_CARDS_KEY = "MobileFlashCard";
 
-const initialData = { 
-  React: {
-    title: "React",
-    questions: [
-      {
-        question: "What is React?",
-        answer: "A library for managing user interfaces"
-      },
-      {
-        question: "Where do you make Ajax requests in React?",
-        answer: "The componentDidMount lifecycle event"
-      }
-    ]
-  },
-  JavaScript: {
-    title: "JavaScript",
-    questions: [
-      {
-        question: "What is a closure?",
-        answer:
-          "The combination of a function and the lexical environment within which that function was declared."
-      }
-    ]
+initialData = () => { 
+  return {
+    React: {
+      title: "React",
+      questions: [
+        {
+          question: "What is React?",
+          answer: "A library for managing user interfaces"
+        },
+        {
+          question: "Where do you make Ajax requests in React?",
+          answer: "The componentDidMount lifecycle event"
+        }
+      ]
+    },
+    JavaScript: {
+      title: "JavaScript",
+      questions: [
+        {
+          question: "What is a closure?",
+          answer:
+            "The combination of a function and the lexical environment within which that function was declared."
+        }
+      ]
+    }
   }
 }
 
 export function getDecks() {
-  return AsyncStorage.getItem(MOBILE_FLASH_CARDS_KEY).then({initialData});
+  AsyncStorage.setItem(MOBILE_FLASH_CARDS_KEY, JSON.stringify(initialData()));
+
+  return AsyncStorage.getItem(MOBILE_FLASH_CARDS_KEY);
 }
 
 export function getDeck(title) {

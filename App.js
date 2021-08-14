@@ -5,7 +5,7 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers/decks";
 import middleware from "./middleware";
-import { setLocalNotification } from "./utils/notifications";
+import { setLocalNotifications } from "./utils/notifications";
 import { createStackNavigator } from "react-navigation-stack";
 import Deck from "./components/Deck";
 import NewCard from "./components/NewCard";
@@ -65,7 +65,7 @@ const Navigation = createAppContainer(Stacks);
 
 export default class App extends Component {
   componentDidMount() {
-    //setLocalNotification();
+    setLocalNotifications();
   }
 
   render() {

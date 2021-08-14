@@ -4,7 +4,7 @@
 
 # Instructions
 
-    1. yarn install
+    1. yarn install and expo install expo-notifications
     2. expo start
     3. Scan your android device on the QR code
     4. This project was ran and test on Android only

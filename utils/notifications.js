@@ -1,16 +1,10 @@
-import { Notifications } from "expo";
-import * as Permissions from "expo-permissions";
+import * as Permissions from 'expo-permissions';
+import * as Notifications from 'expo-notifications';
 
 import { MOBILE_FLASH_CARDS_KEY } from "./api";
 import { AsyncStorage } from "react-native";
 
 const NOTIFICATION_KEY = `${MOBILE_FLASH_CARDS_KEY}:Notifications`;
-
-export function clearLocalNotification() {
-  return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
-    Notifications.cancelAllScheduledNotificationsAsync
-  );
-}
 
 export function createNotification() {
   return {
@@ -28,28 +22,43 @@ export function createNotification() {
   };
 }
 
-export function setLocalNotification() {
+export function clearLocalNotifications(){
+  return AsyncStorage.removeItem(NOTIFICATION_KEY)
+  .then(() => {
+    Notifications.cancelAllScheduledNotificationsAsync();
+  });
+}
+
+export function setLocalNotifications(){
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
-    .then(data => {
-      if (data === null) {
-        Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
-          if (status === "granted") {
-            Notifications.cancelAllScheduledNotificationsAsync();
-
-            let tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(5);
-            tomorrow.setMinutes(0);
-
-            Notifications.scheduleLocalNotificationAsync(createNotification(), {
-              time: tomorrow,
-              repeat: "day"
-            });
-
-            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+    .then((data) => {
+      Permissions.askAsync(Permissions.NOTIFICATIONS)
+        .then(({status}) => {
+          if(status === 'denied'){
           }
-        });
-      }
-    });
+
+          if(status === 'granted'){
+            Notifications.cancelAllScheduledNotificationsAsync()
+
+            Notifications.setNotificationHandler({
+              handleNotification: async () => ({
+                shouldPlaySound: true,
+                shouldShowAlert: true,
+                shouldSetBadge: false
+              })
+            })
+            
+            Notifications.scheduleNotificationAsync({
+              content: {
+                title: "Mobile Flashcards",
+                body: "Quiz yourself today!."
+              },
+              trigger: new Date(Date.now() + 5 * 1000)
+            })
+
+            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+          }
+        })
+    })
 }
