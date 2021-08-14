@@ -15,7 +15,7 @@ class Decks extends Component {
   render() {
     const { decks } = this.props;
 
-    if (typeof decks === null) {
+    if (typeof !decks) {
       return (
         <View>
           <Text style={styles.decksTitle}>Decks</Text>
