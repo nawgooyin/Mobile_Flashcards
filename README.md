@@ -4,6 +4,7 @@
 
 # Instructions
 
-    1. npm install or yarn install
+    1. yarn install
     2. expo start
-    3. This project was ran and test on Android only
+    3. Scan your android device on the QR code
+    4. This project was ran and test on Android only
