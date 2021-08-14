@@ -20,9 +20,10 @@ class NewDeck extends Component {
   };
 
   addDeck = () => {
-    this.props.dispatch(handleAddDeck(this.state.title));
-    this.setState({ title: "" });
-    this.props.navigation.goBack();
+    this.props.dispatch(handleAddDeck(this.state.title)).then(() => {
+      this.props.navigation.navigate("Deck", { deckTitle: this.state.title });
+      this.setState({ title: "" });
+    });
   };
 
   render() {

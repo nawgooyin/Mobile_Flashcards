@@ -68,8 +68,8 @@ class Quiz extends Component {
               <Text style={styles.question}>{questions[index-1].question}</Text>
               {showAnswer && <Text style={styles.answer}>Answer: {questions[index-1].answer}</Text>}
               <TouchableOpacity onPress={this.setShowAnswer} style={styles.question}>
-                {!showAnswer && <Text style={styles.question}>View</Text>}
-                {showAnswer && <Text style={styles.question}>Hide</Text>}
+                {!showAnswer && <Text style={styles.question}>Show Answer</Text>}
+                {showAnswer && <Text style={styles.question}>Hide Answer</Text>}
               </TouchableOpacity>
               <TouchableOpacity onPress={() => this.handleAnswer(true, questions[index])} style={styles.quizBtn}>
                 <Text>Correct</Text>
